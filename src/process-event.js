@@ -6,7 +6,7 @@ const moment = require("moment");
 const service_regex = {
   "api-gateway": {
     ts_start: /(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z){1}/,
-    ts_end: /(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z){1} Method completed/,
+    ts_end: /(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z){1} \(.*?\) Method completed with status/,
     method: /HTTP Method: (.*?),/,
     request_id: /request: (.{36})/,
     request_query_string: /request query string: {(.*)}/,
@@ -39,8 +39,22 @@ module.exports = (service, txt) => {
       res[expr] = "N/A";
     }
   }
-  if (!res.duration_ms && res.ts_start && res.ts_end) {
+  if (
+    !res.duration_ms &&
+    res.ts_start &&
+    res.ts_end &&
+    res.ts_start != "N/A" &&
+    res.ts_end != "N/A"
+  ) {
     res.duration_ms = moment(res.ts_end) - moment(res.ts_start);
   }
+
+  if (res["ip_address"] === "N/A" && res["ip_address2"] === "N/A") {
+    res["ip_address"] = "0.0.0.0";
+  } else if (res["ip_address"] === "N/A") {
+    res["ip_address"] = res["ip_address2"];
+  }
+  delete res["ip_address2"];
+
   return Object.assign(res, { raw: txt });
 };

@@ -5,67 +5,73 @@ const expect = require("chai").expect;
 const events = require("./mocks/events.mock");
 
 describe("process single event", () => {
-  describe("API Gateway Successful request", () => {
+  describe("API Gateway Successful request No IP", () => {
     let res;
     before(() => {
-      res = processEvent("api-gateway", events.api_gateway_succesful_request);
+      res = processEvent(
+        "api-gateway",
+        events.api_gateway_succesful_request_no_ip
+      );
     });
     it("should find the request id", () => {
-      expect(res.request_id).to.eql("9ac0eacd-87c5-11e6-b30c-19c3d9849330");
+      expect(res.request_id).to.eql("f4a8e01b-49f6-11e7-8898-f1161a8a9a54");
     });
     it("should find the method", () => {
-      expect(res.method).to.eql("POST");
+      expect(res.method).to.eql("GET");
     });
     it("should find the request resource path", () => {
-      expect(res.resource_path).to.eql("/repos/hello");
+      expect(res.resource_path).to.eql("/all_state");
     });
     it("should find the response status code", () => {
       expect(res.response_status).to.eql("200");
     });
     it("should find the start ts", () => {
-      expect(res.ts_start).to.eql("2016-10-01T10:55:45.602Z");
+      expect(res.ts_start).to.eql("2017-06-05T13:57:47.369Z");
     });
     it("should find the end ts", () => {
-      expect(res.ts_end).to.eql("2016-10-01T10:55:45.697Z");
-    });
-    it("should find the request query string", () => {
-      expect(res.request_query_string).to.eql("q=koa-oop");
-    });
-    it("should find the request path params", () => {
-      expect(res.request_path).to.eql("id=hello");
-    });
-    it("should find request IP Address", () => {
-      expect(res.ip_address).to.eql("199.203.61.109");
-    });
-  });
-  describe("API Gateway Error request", () => {
-    let res;
-    before(() => {
-      res = processEvent("api-gateway", events.api_gateway_error_request);
-    });
-    it("should find the request id", () => {
-      expect(res.request_id).to.eql("9537d573-87c5-11e6-b3e4-6f23bc206746");
-    });
-    it("should find the method", () => {
-      expect(res.method).to.eql("POST");
-    });
-    it("should find the request resource path", () => {
-      expect(res.resource_path).to.eql("/repos/hello");
-    });
-    it("should find the response status code", () => {
-      expect(res.response_status).to.eql("400");
-    });
-    it("should find the start ts", () => {
-      expect(res.ts_start).to.eql("2016-10-01T10:55:36.315Z");
-    });
-    it("should find the end ts", () => {
-      expect(res.ts_end).to.eql("2016-10-01T10:55:36.480Z");
+      expect(res.ts_end).to.eql("2017-06-05T13:57:47.390Z");
     });
     it("should find the request query string", () => {
       expect(res.request_query_string).to.eql("");
     });
     it("should find the request path params", () => {
-      expect(res.request_path).to.eql("id=hello");
+      expect(res.request_path).to.eql("resource=all_state");
+    });
+    it("should find request IP Address", () => {
+      expect(res.ip_address).to.eql("0.0.0.0");
+    });
+  });
+  describe("API Gateway Successful request", () => {
+    let res;
+    before(() => {
+      res = processEvent("api-gateway", events.api_gateway_successful_request);
+    });
+    it("should find the request id", () => {
+      expect(res.request_id).to.eql("cf101403-4a17-11e7-935f-35dfc4618b7d");
+    });
+    it("should find the method", () => {
+      expect(res.method).to.eql("GET");
+    });
+    it("should find the request resource path", () => {
+      expect(res.resource_path).to.eql("/user_info");
+    });
+    it("should find the response status code", () => {
+      expect(res.response_status).to.eql("200");
+    });
+    it("should find the start ts", () => {
+      expect(res.ts_start).to.eql("2017-06-05T17:52:57.673Z");
+    });
+    it("should find the end ts", () => {
+      expect(res.ts_end).to.eql("2017-06-05T17:52:57.738Z");
+    });
+    it("should find the request query string", () => {
+      expect(res.request_query_string).to.eql("");
+    });
+    it("should find the request path params", () => {
+      expect(res.request_path).to.eql("resource=user_info");
+    });
+    it("should find request IP Address", () => {
+      expect(res.ip_address).to.eql("89.64.28.236");
     });
   });
 
