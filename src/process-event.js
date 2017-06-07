@@ -13,7 +13,8 @@ const service_regex = {
     request_path: /request path: {(.*)}/,
     resource_path: /Resource Path: (.*)/,
     response_status: /completed with status: (\d{3})/,
-    ip_address: /X-Forwarded-For=(\d+\.\d+\.\d+\.\d+)/
+    ip_address: /X-Forwarded-For=(\d+\.\d+\.\d+\.\d+)/,
+    ip_address2: /X-Forwarded-For":"(\d+\.\d+\.\d+\.\d+)/
   },
   lambda: {
     ts_start: /(\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}.\d{3}Z){1} START/,
